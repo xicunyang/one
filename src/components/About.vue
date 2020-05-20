@@ -1,6 +1,6 @@
 <template>
     <div class="about">
-        this is one about
+        one 子应用的关于页
     </div>
 </template>
 

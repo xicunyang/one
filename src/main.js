@@ -28,17 +28,44 @@ function render() {
 
 // 生命周期 - 挂载前
 export async function bootstrap(props) {
+  Vue.prototype.$pager = props.msg.pager
+
+  Vue.prototype.$pager.next({
+    from: "one",
+    showMsg: "bootstrap"
+  });
+
   console.log('one bootstrap');
 }
 // 生命周期 - 挂载后
-export async function mount() {
-  console.log('one mount');
+export async function mount(props) {
+  // console.log('one mount');
+
+  // 设置主应用下发的方法
+  Object.keys(props.fn).forEach(method =>{
+    Vue.prototype[`$${method}`] = props.fn[method]
+  })
+
+  // 设置通讯
+  Vue.prototype.$onGlobalStateChange = props.onGlobalStateChange
+  Vue.prototype.$setGlobalState = props.setGlobalState
+
+  Vue.prototype.$pager.next({
+    from: "one",
+    showMsg: "mount"
+  });
 
   // 渲染
   render()
 }
 // 生命周期 - 解除挂载
 export async function unmount(){
+
+  Vue.prototype.$pager.next({
+    from: "one",
+    showMsg: "unmount"
+  });
+
   console.log('one unmount');
 }
 
